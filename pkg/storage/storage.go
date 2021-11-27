@@ -35,7 +35,7 @@ func NewStorage() *Storage {
 
 func (s *Storage) Open() error {
 	url := fmt.Sprintf(
-		"user=%s password=%s dbname=%s sslmode=%s",
+		"port=5432 host=25.87.1.46 user=%s password=%s dbname=%s sslmode=%s",
 		s.Config.user,
 		s.Config.password,
 		s.Config.dbname,

@@ -44,6 +44,7 @@ func Auth(app *Application) http.HandlerFunc {
 			}
 
 			r_, _ := json.Marshal(resp)
+
 			fmt.Fprintf(w, string(r_))
 			return
 

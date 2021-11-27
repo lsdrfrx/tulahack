@@ -6,8 +6,8 @@ type User struct {
 	Surname      string `json:"surname"`
 	Age          int    `json:"age"`
 	Email        string `json:"email"`
-	EncPassword  string
-	RefreshToken string
+	EncPassword  string	`json:"-"`
+	RefreshToken string `json:"-"`
 	Avatar       string `json:"avatar"`
 	Class        string `json:"class"`
 	School       string `json:"school"`
