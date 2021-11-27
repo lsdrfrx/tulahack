@@ -3,14 +3,14 @@ import React from "react";
 import './chat-message.css';
 
 
-const ChatMessage = ({ user, message }) => {
+const ChatMessage = ({ name, surname, text }) => {
   return (
     <div className="chat-message">
       <span className="chat-message__user">
-        {user}:
+        {name} {surname}:
       </span>
       <p className="chat-message__message">
-        {message}
+        {text}
       </p>
     </div>
   )

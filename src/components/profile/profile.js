@@ -1,23 +1,15 @@
 import React, { useMemo } from 'react';
 
 import ProgressBarBlock from '../progress-bar-block';
+import { connect } from 'react-redux';
 
 import './profile.css';
 
 
-const Profile = ({ name, surname }) => {
-
-  const progressBarData = useMemo(() => {
-    return [
-      { label: 'Информация', value: 40 },
-      { label: 'Посты', value: 20 },
-      { label: 'Профиль', value: 100 },
-      { label: 'Оценки', value: 70 },
-    ]
-  });
+const Profile = ({ name, surname, progress }) => {
 
   const renderedProgressBars = useMemo(() => {
-    return progressBarData.map((data, index) => <ProgressBarBlock {...data} key={index}/>)
+    return progress.map((data, index) => <ProgressBarBlock {...data} key={index}/>)
   })
 
   return (
@@ -40,4 +32,8 @@ const Profile = ({ name, surname }) => {
   );
 }
 
-export default Profile;
+const mapStateToProps = ({ user: { progress, info: { name, surname }}}) => {
+  return { progress, name, surname }
+}
+
+export default connect(mapStateToProps, null)(Profile);

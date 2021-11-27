@@ -1,1 +1,3 @@
-3к
+import Service from "./service";
+
+export default Service;

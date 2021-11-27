@@ -1,16 +1,28 @@
-import React, { useMemo, useCallback } from "react";
+import React, { useMemo, useCallback, useState } from "react";
 import { Form } from "react-final-form";
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import AuthenticationInputRow from "../authentication-input-row";
+import { withService } from "../hoc";
+import { compose } from '../../utils';
+import { userAuth } from "../../actions";
 
 import './authentication-form.css';
 
 
-const AuthenticationForm = ({ buttonText, inputs }) => {
+const AuthenticationForm = ({ buttonText, inputs, userAuth }) => {
 
-  const handleSubmit = useCallback((value) => {
-    console.log(value)
+  const [errorMessageVisibility, setErrorMessageVisibility] = useState('hidden');
+
+  const handleSubmit = useCallback((userInfo) => {
+    userAuth(userInfo);
+    const { password, confirmPassword = null } = userInfo;
+    if (password !== confirmPassword && confirmPassword !== null) {
+      setErrorMessageVisibility('visible');
+    } else {
+      setErrorMessageVisibility('hidden');
+    }
   }, []);
 
   const renderedInputRows = useMemo(() => {
@@ -26,6 +38,9 @@ const AuthenticationForm = ({ buttonText, inputs }) => {
               {renderedInputRows}
               <div className="authentication-form__button">
                 <button type="submit">{buttonText}</button>
+                <div className="authentication-form__error-message" style={{ visibility: errorMessageVisibility }}>
+                  <p>Что-то пошло не так :(</p>
+                </div>
               </div>
             </div>
           </form>
@@ -40,4 +55,17 @@ AuthenticationForm.propTypes = {
   inputs: PropTypes.arrayOf(PropTypes.array)
 }
 
-export default AuthenticationForm;
+const mapStateToProps = ({ user: { serverIntrectionInfo: { error }}}) => {
+  return { error };
+}
+
+const mapDispatchToProps = (dispatch, { service }) => {
+  return {
+    userAuth: (userInfo) => userAuth(dispatch, service, userInfo)
+  }
+}
+
+export default compose(
+  withService,
+  connect(mapStateToProps, mapDispatchToProps)
+)(AuthenticationForm);

@@ -1,38 +1,20 @@
 import React, { useMemo, useCallback } from 'react';
 import { Form } from 'react-final-form';
+import { connect } from 'react-redux';
 
 import ChatInput from '../chat-input';
 import ChatMessage from '../chat-message';
+import { withService, withServices } from '../hoc';
+import { compose } from '../../utils';
+import { sendMessage } from '../../actions';
 
 import './chat.css';
 
 
-const Chat = () => {
+const Chat = ({ messages, sendMessage }) => {
 
-  const messages = useMemo(() => {
-    return [
-      { user: 'Иван&nbspИванов', message: 'аыоваовыфаэвфаээфвэаэфэа-293а2оа2оза32а23а32а23а2'},
-      { user: 'Иван Иванов', message: 'аыоваовыфаэвфаээфвэаэфэа-293а2оа2оза32а23а32а23а2'},
-      { user: 'Иван Иванов', message: 'аыоваовыфаэвфаээфвэаэфэа-293а2оа2оза32а23а32а23а2'},
-      { user: 'Иван Иванов', message: 'аыоваовыфаэвфаээфвэаэфэа-293а2оа2оза32а23а32а23а2'},
-      { user: 'Иван Иванов', message: 'аыоваовыфаэвфаээфвэаэфэа-293а2оа2оза32а23а32а23а2'},
-      { user: 'Иван Иванов', message: 'аыоваовыфаэвфаээфвэаэфэа-293а2оа2оза32а23а32а23а2'},
-      { user: 'Иван Иванов', message: 'аыоваовыфаэвфаээфвэаэфэа-293а2оа2оза32а23а32а23а2'},
-      { user: 'Иван Иванов', message: 'аыоваовыфаэвфаээфвэаэфэа-293а2оа2оза32а23а32а23а2'},
-      { user: 'Иван Иванов', message: 'аыоваовыфаэвфаээфвэаэфэа-293а2оа2оза32а23а32а23а2'},
-      { user: 'Иван Иванов', message: 'аыоваовыфаэвфаээфвэаэфэа-293а2оа2оза32а23а32а23а2'},
-      { user: 'Иван Иванов', message: 'аыоваовыфаэвфаээфвэаэфэа-293а2оа2оза32а23а32а23а2'},
-      { user: 'Иван Иванов', message: 'аыоваовыфаэвфаээфвэаэфэа-293а2оа2оза32а23а32а23а2'},
-      { user: 'Иван Иванов', message: 'аыоваовыфаэвфаээфвэаэфэа-293а2оа2оза32а23а32а23а2'},
-      { user: 'Иван Иванов', message: 'аыоваовыфаэвфаээфвэаэфэа-293а2оа2оза32а23а32а23а2'},
-      { user: 'Иван Иванов', message: 'аыоваовыфаэвфаээфвэаэфэа-293а2оа2оза32а23а32а23а2'},
-      { user: 'Иван Иванов', message: 'аыоваовыфаэвфаээфвэаэфэа-293а2оа2оза32а23а32а23а2'},
-      { user: 'Иван Иванов', message: 'аыоваовыфаэвфаээфвэаэфэа-293а2оа2оза32а23а32а23а2'},
-    ]
-  });
-
-  const handleSubmit = useCallback((value) => {
-    console.log(value);
+  const handleSubmit = useCallback(({ messageText }) => {
+    sendMessage(messageText);
   }, []);
 
   const renderedMessages = useMemo(() => {
@@ -60,4 +42,13 @@ const Chat = () => {
   )
 }
 
-export default Chat;
+const mapDispatchToProps = (dispatch, { service }) => {
+  return {
+    sendMessage: (text) => dispatch(sendMessage(service, text))
+  }
+}
+
+export default compose(
+  withService,
+  connect(null, mapDispatchToProps)
+)(Chat);
