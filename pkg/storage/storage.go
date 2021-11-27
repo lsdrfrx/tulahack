@@ -8,7 +8,7 @@ import (
 )
 
 type Storage struct {
-	Db           *sql.DB
+	db           *sql.DB
 	Config       *Config
 
 	userrepo     Repo
@@ -17,39 +17,47 @@ type Storage struct {
 }
 
 func NewStorage() *Storage {
-	return &Storage{
+	s := &Storage{
 		Config: NewConfig(),
-
-		userrepo: repos.NewUserRepo(),
-		taskrepo: repos.NewTaskRepo(),
-		schedulerepo: repos.NewScheduleRepo(),
 	}
+
+	err := s.Open()
+	if err != nil {
+		return nil
+	}
+
+	s.userrepo = repos.NewUserRepo(s.db)
+	//s.taskrepo = repos.NewTaskRepo(s.db)
+	//s.schedulerepo = repos.NewScheduleRepo(s.db)
+
+	return s
 }
 
 func (s *Storage) Open() error {
 	url := fmt.Sprintf(
-		"postgres://%s:%s@localhost/%s",
+		"user=%s password=%s dbname=%s sslmode=%s",
 		s.Config.user,
 		s.Config.password,
 		s.Config.dbname,
+		s.Config.sslmode,
 	)
 
-	db, err := sql.Open("postgres", url)
+	db_, err := sql.Open("postgres", url)
 	if err != nil {
 		return err
 	}
 
-	err = db.Ping()
+	err = db_.Ping()
 	if err != nil {
 		return err
 	}
 
-	s.Db = db
+	s.db = db_
 	return nil
 }
 
 func (s *Storage) Close() error {
-	err := s.Db.Close()
+	err := s.db.Close()
 	if err != nil {
 		return err
 	}
@@ -68,4 +76,10 @@ func (s *Storage) DB(repo string) Repo {
 	default:
 		return nil
 	}
+}
+
+func (s *Storage) Trunc() {
+	query := "TRUNCATE TABLE users RESTART IDENTITY CASCADE"
+	_, err := s.db.Exec(query)
+	if err != nil {}
 }

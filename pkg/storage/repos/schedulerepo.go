@@ -1,12 +1,18 @@
 package repos
 
-type ScheduleRepo struct {}
+import "database/sql"
 
-func NewScheduleRepo() *ScheduleRepo {
-	return &ScheduleRepo{}
+type ScheduleRepo struct {
+	db *sql.DB
 }
 
-func (r *ScheduleRepo) Get() interface{} {
+func NewScheduleRepo(db *sql.DB) *ScheduleRepo {
+	return &ScheduleRepo{
+		db: db,
+	}
+}
+
+func (r *ScheduleRepo) Get(userid int) interface{} {
 	return nil
 }
 

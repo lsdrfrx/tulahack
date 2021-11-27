@@ -12,6 +12,6 @@ func NewConfig() *Config {
 		user: "postgres",
 		password: "Jopa1235",
 		dbname: "test",
-		sslmode: "disabled",
+		sslmode: "disable",
 	}
 }
