@@ -1,0 +1,10 @@
+.authentication-input-row {
+  display: flex;
+  justify-content: space-between;
+
+  margin-bottom: 28px;
+}
+
+.authentication-input-row > label:not(:last-child) {
+  margin-right: 20px;
+}

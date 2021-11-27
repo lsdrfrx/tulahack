@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+.authentication-element__container {
+  padding: 30px;
+}
+
+.authentication-form__button {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.authentication-form__button > button {
+  width: 288px;
+  padding: 10px 30px;
+
+  text-transform: uppercase;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: #fff;
+
+  border-radius: 5px;
+  background-color: #6dbff1;
+}
+
+.authentication-form__button > button:hover {
+  background-color: #5db7f0;
+}

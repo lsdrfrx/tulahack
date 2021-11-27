@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&display=swap');
+
+.profile {
+  width: 220px;
+  padding: 10px;
+
+  font-family: 'Open Sans', sans-serif;
+  color: #464646;
+
+  border-radius: 5px;
+  box-shadow: 0px -1px 11px 3px rgba(92, 141, 179, 0.2);
+}
+
+.profile__info > p {
+  text-align: center;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.profile__info {
+  margin-bottom: 30px;
+}
+
+.profile__header > p {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.profile__header {
+  margin-bottom: 30px;
+}
+
+.profile__avatar > img {
+  width: 100%;
+  height: 100%;
+
+  border-radius: 50%;
+}
+
+.profile__avatar {
+  --avatar-size: 100px;
+
+  display: block;
+
+  margin: 0 auto;
+  margin-bottom: 10px;
+
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  
+}

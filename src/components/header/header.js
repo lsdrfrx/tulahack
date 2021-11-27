@@ -1,0 +1,33 @@
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+
+import './header.css';
+
+
+const Header = () => {
+  return (
+    <header className="header">
+      <nav className="header__nav">
+        <ul className="header__list">
+          <li>
+            <NavLink to="/main" exact className="header__link">
+              Расписание занятий
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/" exact className="header__link">
+              Личные сообщения
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/" exact className="header__link"> 
+              Информация
+            </NavLink>
+          </li>
+        </ul>
+      </nav>
+    </header>
+  );
+}
+
+export default Header;

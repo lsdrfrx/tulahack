@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&display=swap');
+
+.schedule-item {
+  display: flex;
+  flex-direction: column;
+
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+}
+
+.schedule-item__class {
+  min-height: 36px;
+}
+
+.schedule-item__day {
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.schedule-item__day, .schedule-item__class {
+  width: 160px;
+  padding: 10px;
+
+  background-color: #fff;
+}
+
+.schedule-item__day, .schedule-item__class_time {
+  text-align: center;
+}
+
+.schedule-item__day, .schedule-item__class:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.schedule-item:not(:last-child) {
+  margin-right: 10px;
+}
