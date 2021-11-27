@@ -1,17 +1,17 @@
 package models
 
 type User struct {
-	Id           int
-	Name         string
-	Surname      string
-	Age          int
-	Email        string
+	Id           int    `json:"id"`
+	Name         string `json:"name"`
+	Surname      string `json:"surname"`
+	Age          int    `json:"age"`
+	Email        string `json:"email"`
 	EncPassword  string
 	RefreshToken string
-	Avatar       string
-	Class        string
-	School       string
-	UserId       int
+	Avatar       string `json:"avatar"`
+	Class        string `json:"class"`
+	School       string `json:"school"`
+	UserId       int    `json:"userid"`
 }
 
 func NewUser(id int, name, surname string,

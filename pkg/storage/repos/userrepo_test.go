@@ -22,7 +22,7 @@ func TestCreate(t *testing.T) {
 		t.Fatal("Unable to create new row: ", err)
 	}
 
-	u, err := s.DB("user").Get(123)
+	u, err := s.DB("user").Get("Ауе")
 	if err != nil {
 		t.Fatal("Unable to find user: ", err)
 	}
@@ -53,7 +53,7 @@ func TestDelete(t *testing.T) {
 		t.Fatal("Unable to delete user: ", err)
 	}
 
-	_, err = s.DB("user").Get(user.UserId)
+	_, err = s.DB("user").Get(user.Email)
 	if err == nil {
 		t.Fatal("User is not deleted: ", err)
 	}

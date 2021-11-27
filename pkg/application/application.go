@@ -10,14 +10,14 @@ type Application struct {
 	infolog *log.Logger
 	errolog *log.Logger
 	router  *http.ServeMux
-	storage *storage.Storage
+	Storage *storage.Storage
 
 	Config  *Config
 }
 
 func NewApplication() *Application {
 	app := &Application{
-		storage: storage.NewStorage(),
+		Storage: storage.NewStorage(),
 		Config: NewConfig(),
 	}
 
@@ -49,3 +49,4 @@ func (app *Application) GetRouter() *http.ServeMux {
 func (app *Application) GetErrorLogger() *log.Logger {
 	return app.errolog
 }
+

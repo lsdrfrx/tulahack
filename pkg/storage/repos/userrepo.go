@@ -16,9 +16,9 @@ func NewUserRepo(db *sql.DB) *UserRepo {
 	}
 }
 
-func (r *UserRepo) Get(userid int) (interface{}, error) {
+func (r *UserRepo) Get(email string) (interface{}, error) {
 	var user models.User
-	query := fmt.Sprintf("SELECT * FROM users WHERE userid=%v", userid)
+	query := fmt.Sprintf("SELECT * FROM users WHERE email='%s'", email)
 
 	row := r.db.QueryRow(query)
 	err := row.Scan(
