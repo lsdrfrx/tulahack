@@ -12,7 +12,7 @@ func Home(app *Application) http.HandlerFunc {
 }
 func Auth(app *Application) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Страница авторизации")
+
 	}
 }
 func Store(app *Application) http.HandlerFunc {
