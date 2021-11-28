@@ -34,8 +34,6 @@ const initialUser = {
 
 const updateUser = (state, action) => {
 
-  console.log(action)
-
   if (state === undefined) {
     return initialUser;
   }

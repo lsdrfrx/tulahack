@@ -25,8 +25,38 @@ export default class Service {
   }
 
   userAuth = async (userInfo) => {
-    // /authentication
-    const obj = {
+    const user = {
+      info: {
+        userid: null,
+        name: 'Иван',
+        surname: 'Иванов',
+        age: '',
+        class: '',
+        email: '',
+        school: '',
+        avatar: null
+      },
+    
+      progress: [
+        { label: 'Информация', value: 40 },
+        { label: 'Посты', value: 20 },
+        { label: 'Профиль', value: 100 },
+        { label: 'Оценки', value: 70 },
+      ],
+    
+      shop: { },
+      
+      serverIntrectionInfo: {
+        loading: true,
+        error: null
+      }
+    }
+
+    console.log('Кнопка сработала, ща должен показаться ответ от сервера')
+
+    const url = 'http://localhost:5000/auth'
+
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8'
@@ -35,11 +65,17 @@ export default class Service {
         user: this._transformUserInfo(userInfo),
         new: userInfo.school !== undefined 
       })
+    })
+
+    if (!response.ok) {
+      throw new Error(`Something goes wrong. Error status: ${response.status}`);
     }
 
-    console.log(this._transformUserInfo(userInfo))
+    const data = await response.json();
 
-    return userInfo;
+    console.log(data)
+
+    return user;
   }
 
   getSchedule = async (userClass, school) => {

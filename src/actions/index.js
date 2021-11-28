@@ -74,13 +74,11 @@ const fetchChatMessagesFailure = (payload) => {
 const userAuth = (dispatch, service, userInfo) => {
   dispatch(userAuthRequested());
   service.userAuth(userInfo)
-    .then(userInfo => {
-      dispatch(userAuthSuccess(userInfo))
-    })
+    .then(userInfo => dispatch(userAuthSuccess(userInfo)))
     .catch(err => dispatch(userAuthFailure(err)))
 }
 
-const fetchSchedule = (service) => (dispatch, getState)=> {
+const fetchSchedule = (service) => (dispatch, getState) => {
   dispatch(fetchScheduleRequested());
   const { user: { info }} = getState(); 
   service.getSchedule(info.class, info.school)
@@ -98,7 +96,7 @@ const fetchChatMessages = (dispatch, service) => {
 const sendMessage = (service, text) => (dispatch, getState) => {
   const { user: { info: { name, surname }}} = getState();
   service.sendMessage(name, surname, text)
-    .then(data => fetchChatMessages(dispatch, service))
+    .then(() => fetchChatMessages(dispatch, service))
     .catch(err => console.log(err))
 }
 

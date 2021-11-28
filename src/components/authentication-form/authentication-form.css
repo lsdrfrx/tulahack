@@ -10,7 +10,7 @@
   text-align: center;
 }
 
-.authentication-form__button > button {
+.authentication-form__button  button {
   width: 288px;
   padding: 10px 30px;
   margin-bottom: 15px;
@@ -26,7 +26,7 @@
   background-color: #6dbff1;
 }
 
-.authentication-form__button > button:hover {
+.authentication-form__button  button:hover {
   background-color: #5db7f0;
 }
 
