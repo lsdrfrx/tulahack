@@ -15,7 +15,7 @@ func Auth(app *Application) http.HandlerFunc {
 		w.Header().Set("Access-Control-Allow-Origin", "*")
 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 
-		fmt.Fprintf(w, "%v\n", r)
+		app.Info(fmt.Sprintf("Request:\n%v\n", r))
 
 		r.ParseForm()
 		_new := r.Form.Get("new")
