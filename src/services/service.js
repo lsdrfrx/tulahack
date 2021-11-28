@@ -46,6 +46,8 @@ export default class Service {
 
     // console.log(data)
 
+    // return data
+
     const fake = {
       info: userInfo,
 
