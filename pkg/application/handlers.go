@@ -10,6 +10,8 @@ import (
 )
 
 func Auth(app *Application) http.HandlerFunc {
+	app.Info("Объект базы данных: ", app.Storage)
+	app.Info("Пользовательский репозиторий: ", app.Storage.DB("user"), "\n\n\n")
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -22,7 +24,9 @@ func Auth(app *Application) http.HandlerFunc {
 		if _new == "true" {
 			email := r.Form.Get("email")
 			if _, err := app.Storage.DB("user").Get(email); err == nil {
-				fmt.Fprintf(w, responses.ErrorResponse("На данную почту уже имеется зарегистрированный аккаунт"))
+				rsp := responses.ErrorResponse("На данную почту уже имеется зарегистрированный аккаунт")
+				app.Info("\n", rsp, "\n")
+				fmt.Fprintf(w, rsp)
 				return
 			}
 
@@ -43,24 +47,36 @@ func Auth(app *Application) http.HandlerFunc {
 				)
 				err := proto.RegistrateUser(app.Storage, user)
 				if err != nil {
-					fmt.Fprintf(w, responses.ErrorResponse("Техническая ошибка. Пожалуйста, попробуйте через пару минут"))
+					rsp := responses.ErrorResponse("Техническая ошибка. Пожалуйста, попробуйте через пару минут")
+					app.Info("\n", rsp, "\n")
+					fmt.Fprintf(w, rsp)
 					return
 				}
 
-				fmt.Fprintf(w, responses.UserResponse(user))
+				rsp := responses.UserResponse(user)
+				app.Info("\n", rsp, "\n")
+				fmt.Fprintf(w, rsp)
 			} else {
-				fmt.Fprintf(w, responses.ErrorResponse("Пароли не совпадают"))
+				rsp := responses.ErrorResponse("Пароли не совпадают")
+				app.Info("\n", rsp, "\n")
+				fmt.Fprintf(w, rsp)
 			}
 		} else if _new == "false" {
 			email := r.Form.Get("email")
 			password := r.Form.Get("password")
 			user, ok, err := proto.ValidateUser(app.Storage, email, password)
 			if ok {
-				fmt.Fprintf(w, responses.UserResponse(user))
-			} else if !ok {
-				fmt.Fprintf(w, responses.ErrorResponse("Неверный логин или пароль"))
-			} else if err != nil {
-				fmt.Fprintf(w, responses.ErrorResponse("Техническая ошибка. Пожалуйста, попробуйте через пару минут"))
+				rsp := responses.UserResponse(user)
+				app.Info("\n", rsp, "\n")
+				fmt.Fprintf(w, rsp)
+			} else if !ok || err != nil {
+				rsp := responses.ErrorResponse("Неверный логин или пароль")
+				app.Info("\n", rsp, "\n")
+				fmt.Fprintf(w, rsp)
+			} else {
+				rsp := responses.ErrorResponse("Техническая ошибка. Пожалуйста, попробуйте через пару минут")
+				app.Info("\n", rsp, "\n")
+				fmt.Fprintf(w, rsp)
 			}
 		}
 	}
