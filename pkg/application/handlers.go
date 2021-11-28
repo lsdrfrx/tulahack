@@ -4,9 +4,10 @@ import (
 	"awesomeProject/pkg/auth/proto"
 	"awesomeProject/pkg/models"
 	"awesomeProject/pkg/responses"
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
-	"strconv"
 )
 
 func Auth(app *Application) http.HandlerFunc {
@@ -17,12 +18,31 @@ func Auth(app *Application) http.HandlerFunc {
 		w.Header().Set("Access-Control-Allow-Origin", "*")
 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 
-		app.Info(fmt.Sprintf("Request:\n%v\n", r))
+		buff, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			app.Error(err)
+			return
+		}
 
-		r.ParseForm()
-		_new := r.Form.Get("new")
-		if _new == "true" {
-			email := r.Form.Get("email")
+		app.Info(buff)
+
+		reqdata := make(map[string]interface{})
+		user := models.User{}
+		err = json.Unmarshal(buff, &reqdata)
+		if err != nil {
+			app.Error(err)
+			return
+		}
+
+
+		data, _ := json.Marshal(reqdata["user"].(map[string]interface{}))
+		app.Info(reqdata)
+		_ = json.Unmarshal(data, &user)
+
+		_new := reqdata["new"]
+
+		if _new == true {
+			email := user.Email
 			if _, err := app.Storage.DB("user").Get(email); err == nil {
 				rsp := responses.ErrorResponse("На данную почту уже имеется зарегистрированный аккаунт")
 				app.Info("\n", rsp, "\n")
@@ -30,40 +50,23 @@ func Auth(app *Application) http.HandlerFunc {
 				return
 			}
 
-			name            := r.Form.Get("name")
-			surname         := r.Form.Get("surname")
-			age             := r.Form.Get("age")
-			class           := r.Form.Get("class")
-			school          := r.Form.Get("school")
-			password        := r.Form.Get("password")
-			confirmPassword := r.Form.Get("confirmPassword")
+			user.EncPassword = reqdata["user"].(map[string]interface{})["password"].(string)
+			user.Age = reqdata["user"].(map[string]interface{})["age"].(int)
 
-			if password == confirmPassword {
-				a, _ := strconv.Atoi(age)
-				user := models.NewUser(
-					name, surname, a,
-					email, password, "",
-					"", class, school, 0,
-				)
-				err := proto.RegistrateUser(app.Storage, user)
-				if err != nil {
-					rsp := responses.ErrorResponse("Техническая ошибка. Пожалуйста, попробуйте через пару минут")
-					app.Info("\n", rsp, "\n")
-					fmt.Fprintf(w, rsp)
-					return
-				}
-
-				rsp := responses.UserResponse(user)
+			err = proto.RegistrateUser(app.Storage, user)
+			if err != nil {
+				rsp := responses.ErrorResponse("Техническая ошибка. Пожалуйста, попробуйте через пару минут")
 				app.Info("\n", rsp, "\n")
 				fmt.Fprintf(w, rsp)
-			} else {
-				rsp := responses.ErrorResponse("Пароли не совпадают")
-				app.Info("\n", rsp, "\n")
-				fmt.Fprintf(w, rsp)
+				return
 			}
-		} else if _new == "false" {
-			email := r.Form.Get("email")
-			password := r.Form.Get("password")
+
+			rsp := responses.UserResponse(user)
+			app.Info("\n", rsp, "\n")
+			fmt.Fprintf(w, rsp)
+		} else if _new == false {
+			email := user.Email
+			password := reqdata["user"].(map[string]interface{})["password"].(string)
 			user, ok, err := proto.ValidateUser(app.Storage, email, password)
 			if ok {
 				rsp := responses.UserResponse(user)
