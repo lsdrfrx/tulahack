@@ -11,7 +11,10 @@ import (
 
 func Auth(app *Application) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "%v", r)
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+
+		fmt.Fprintf(w, "%v\n", r)
 
 		r.ParseForm()
 		_new := r.Form.Get("new")
@@ -43,18 +46,20 @@ func Auth(app *Application) http.HandlerFunc {
 					return
 				}
 
-				fmt.Fprintf(w, "Аккаунт создан")
+				fmt.Fprintf(w, responses.UserResponse(user))
 			} else {
 				fmt.Fprintf(w, responses.ErrorResponse("Пароли не совпадают"))
 			}
 		} else if _new == "false" {
 			email := r.Form.Get("email")
 			password := r.Form.Get("password")
-			valid := proto.ValidateUser(app.Storage, email, password)
-			if valid {
-				fmt.Fprintf(w, "Аккаунт валиден")
-			} else {
+			user, ok, err := proto.ValidateUser(app.Storage, email, password)
+			if ok {
+				fmt.Fprintf(w, responses.UserResponse(user))
+			} else if !ok {
 				fmt.Fprintf(w, responses.ErrorResponse("Неверный логин или пароль"))
+			} else if err != nil {
+				fmt.Fprintf(w, responses.ErrorResponse("Техническая ошибка. Пожалуйста, попробуйте через пару минут"))
 			}
 		}
 	}

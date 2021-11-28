@@ -5,16 +5,16 @@ import (
 	"awesomeProject/pkg/storage"
 )
 
-func ValidateUser(s *storage.Storage, email, password string) bool {
+func ValidateUser(s *storage.Storage, email, password string) (models.User, bool, error) {
 	user, err := s.DB("user").Get(email)
 	if err != nil {
-		return false
+		return models.User{}, false, err
 	}
 
 	if user.(models.User).EncPassword == password {
-		return true
+		return user.(models.User), true, nil
 	}
-	return false
+	return models.User{}, false, nil
 }
 
 func RegistrateUser(s *storage.Storage, user models.User) error {

@@ -18,3 +18,12 @@ func ErrorResponse(content string) string {
 	result, _ := json.Marshal(resp)
 	return string(result)
 }
+
+func UserResponse(user models.User) string {
+	resp := AuthResponse{
+		Info: user,
+	}
+
+	result, _ := json.Marshal(resp)
+	return string(result)
+}
