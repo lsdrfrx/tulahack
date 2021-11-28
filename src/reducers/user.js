@@ -8,12 +8,12 @@ import {
 const initialUser = {
   info: {
     userid: null,
-    name: '',
-    surname: '',
-    age: '',
-    class: '',
-    email: '',
-    school: '',
+    name: 'Иван',
+    surname: 'Иванов',
+    age: '12',
+    class: '11-А',
+    email: 'mymail123@gmail.com',
+    school: 'МБОУ Средняя общеобразовательная школа №3',
     avatar: null
   },
 
@@ -51,7 +51,7 @@ const updateUser = (state, action) => {
 
     case USER_AUTH_SUCCESS:
       return {
-        ...action.payload,          // ждём объект со структурой initialUser
+        ...action.payload,   
         serverIntrectionInfo: {
           loading: false,
           error: null

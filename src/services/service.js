@@ -25,35 +25,6 @@ export default class Service {
   }
 
   userAuth = async (userInfo) => {
-    const user = {
-      info: {
-        userid: null,
-        name: 'Иван',
-        surname: 'Иванов',
-        age: '',
-        class: '',
-        email: '',
-        school: '',
-        avatar: null
-      },
-    
-      progress: [
-        { label: 'Информация', value: 40 },
-        { label: 'Посты', value: 20 },
-        { label: 'Профиль', value: 100 },
-        { label: 'Оценки', value: 70 },
-      ],
-    
-      shop: { },
-      
-      serverIntrectionInfo: {
-        loading: true,
-        error: null
-      }
-    }
-
-    console.log('Кнопка сработала, ща должен показаться ответ от сервера')
-
     const url = 'http://localhost:5000/auth'
 
     const response = await fetch(url, {
@@ -75,7 +46,7 @@ export default class Service {
 
     console.log(data)
 
-    return user;
+    return data;
   }
 
   getSchedule = async (userClass, school) => {

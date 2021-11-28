@@ -25,3 +25,8 @@
   padding: 20px;
   padding-bottom: 40px;
 }
+
+.content-wrapper {
+  display: flex;
+  align-items: center;
+}

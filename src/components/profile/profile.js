@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
+import { connect } from 'react-redux';
 
 import ProgressBarBlock from '../progress-bar-block';
-import { connect } from 'react-redux';
 
 import './profile.css';
 

@@ -2,7 +2,7 @@ import React, { useMemo, useCallback, useState } from "react";
 import { Form } from "react-final-form";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { NavLink } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 import AuthenticationInputRow from "../authentication-input-row";
 import { withService } from "../hoc";
@@ -15,14 +15,16 @@ import './authentication-form.css';
 const AuthenticationForm = ({ buttonText, inputs, userAuth }) => {
 
   const [errorMessageVisibility, setErrorMessageVisibility] = useState('hidden');
+  const navigate = useNavigate();
 
   const handleSubmit = useCallback((userInfo) => {
-    userAuth(userInfo);
     const { password, confirmPassword = null } = userInfo;
     if (password !== confirmPassword && confirmPassword !== null) {
       setErrorMessageVisibility('visible');
     } else {
+      userAuth(userInfo);
       setErrorMessageVisibility('hidden');
+      navigate('/main/schedule')
     }
   }, []);
 

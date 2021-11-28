@@ -8,7 +8,8 @@ import {
 import { 
   SignInPage,
   SignUpPage,
-  SchedulePage
+  SchedulePage,
+  InfoPage
 } from '../pages';
 
 import './app.css';
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="/authentication/sign-in" element={<SignInPage />} exact/>
           <Route path="/authentication/sign-up" element={<SignUpPage />} />
           <Route path="/main/schedule" element={<SchedulePage />}/>
+          <Route path="/main/info" element={<InfoPage />}/>
         </Routes>
       </Router>
     </div>

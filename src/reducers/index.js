@@ -3,6 +3,7 @@ import updateSchedule from "./schedule";
 import updateChat from './chat';
 
 const reducer = (state, action) => {
+  console.log(state)
   return {
     user: updateUser(state, action),
     schedule: updateSchedule(state, action),

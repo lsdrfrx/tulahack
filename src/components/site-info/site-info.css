@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&display=swap');
+
+.site-info {
+  padding: 20px;
+  width: 1100px;
+
+  font-family: 'Open Sans', sans-serif;
+  color: #464646;
+
+  border-radius: 5px;
+  box-shadow: 0px -1px 11px 3px rgba(92, 141, 179, 0.2);
+}
+
+.site-info__title {
+  margin-bottom: 20px;
+  font-size: 22px;
+}
+
+.site-info__text {
+  font-size: 20px;
+  line-height: 1.2em;
+}

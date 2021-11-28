@@ -4,9 +4,10 @@
   display: block;
   width: 100%;
 
+  position: relative;
+
   font-family: 'Open Sans', sans-serif;
   font-weight: 500;
-
 }
 
 .authentication-input span {
@@ -33,4 +34,13 @@
 
 .authentication-input input:focus {
   border: solid 1px #30b0e2;
+}
+
+.hide-icon {
+  position: absolute;
+  top: 45px;
+  right: 10px;
+
+  color: #888;
+  background-color: transparent;
 }
