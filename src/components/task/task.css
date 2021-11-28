@@ -6,7 +6,8 @@
 
   border-radius: 5px;
   box-shadow: 0px -1px 6px 3px rgba(92, 141, 179, 0.2);
-
+  
+  color: #464646;
   cursor: pointer;
   width: 330px;
   margin-bottom: 20px;
