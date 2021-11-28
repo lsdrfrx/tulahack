@@ -25,28 +25,41 @@ export default class Service {
   }
 
   userAuth = async (userInfo) => {
-    const url = 'http://localhost:5000/auth'
+    // const url = 'http://localhost:5000/auth'
 
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8'
-      },
-      body: JSON.stringify({
-        user: this._transformUserInfo(userInfo),
-        new: userInfo.school !== undefined 
-      })
-    })
+    // const response = await fetch(url, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json;charset=utf-8'
+    //   },
+    //   body: JSON.stringify({
+    //     user: this._transformUserInfo(userInfo),
+    //     new: userInfo.school !== undefined 
+    //   })
+    // })
 
-    if (!response.ok) {
-      throw new Error(`Something goes wrong. Error status: ${response.status}`);
+    // if (!response.ok) {
+    //   throw new Error(`Something goes wrong. Error status: ${response.status}`);
+    // }
+
+    // const data = await response.json();
+
+    // console.log(data)
+
+    const fake = {
+      info: userInfo,
+
+      progress: [
+        { label: 'Информация', value: 40 },
+        { label: 'Посты', value: 20 },
+        { label: 'Профиль', value: 100 },
+        { label: 'Оценки', value: 70 },
+      ],
+    
+      shop: { },
     }
 
-    const data = await response.json();
-
-    console.log(data)
-
-    return data;
+    return fake;
   }
 
   getSchedule = async (userClass, school) => {

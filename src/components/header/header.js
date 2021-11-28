@@ -15,8 +15,8 @@ const Header = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/" exact className="header__link">
-              Личные сообщения
+            <NavLink to="/main/tasks" exact className="header__link">
+              Задания
             </NavLink>
           </li>
           <li>

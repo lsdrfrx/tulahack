@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&display=swap');
+
+.task {
+  font-family: 'Open Sans';
+  padding: 20px;
+
+  border-radius: 5px;
+  box-shadow: 0px -1px 6px 3px rgba(92, 141, 179, 0.2);
+
+  cursor: pointer;
+  width: 330px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+}
+
+.task:hover {
+  border: 1px solid #6dbff1;
+}
+
+.task__title {
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+.task__description {
+  font-size: 16px;
+  margin-bottom: 15px;
+  line-height: 1.1em;
+}
+
+.task__price {
+  display: flex;
+  align-items: center;
+}
+
+.task__price span:first-child {
+  font-size: 20px;
+}
+
+.task__price span:last-child {
+  margin-left: 5px;
+  font-size: 28px;
+  color: #eec212;
+}

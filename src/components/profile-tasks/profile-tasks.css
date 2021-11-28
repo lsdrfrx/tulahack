@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&display=swap');
+
+.profile-tasks {
+  font-family: 'Open Sans';
+  font-size: 20px;
+  padding: 20px;
+
+  border-radius: 5px;
+  box-shadow: 0px -1px 11px 3px rgba(92, 141, 179, 0.2);
+}
+
+.profile-tasks > div span:first-child {
+  font-weight: 700;  
+}
+
+.profile-tasks > div {
+  margin-bottom: 10px;
+}
+
+.profile-tasks__coins {
+  display: flex;
+  align-items: center;
+}
+
+.profile-tasks__coins span:not(:last-child) {
+  margin-right: 5px;
+}
+
+.profile-tasks__coins span:last-child {
+  font-size: 24px;
+  color: #eec212;
+}

@@ -9,7 +9,8 @@ import {
   SignInPage,
   SignUpPage,
   SchedulePage,
-  InfoPage
+  InfoPage,
+  TasksPage
 } from '../pages';
 
 import './app.css';
@@ -24,6 +25,7 @@ const App = () => {
           <Route path="/authentication/sign-up" element={<SignUpPage />} />
           <Route path="/main/schedule" element={<SchedulePage />}/>
           <Route path="/main/info" element={<InfoPage />}/>
+          <Route path="/main/tasks" element={<TasksPage />}/>
         </Routes>
       </Router>
     </div>
