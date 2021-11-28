@@ -23,7 +23,6 @@ func NewApplication() *Application {
 
 	app.configureLogger()
 	app.configureRouter()
-	app.configureStorage()
 
 	return app
 }

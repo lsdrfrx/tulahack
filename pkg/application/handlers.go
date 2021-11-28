@@ -13,6 +13,7 @@ func Auth(app *Application) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 
 		fmt.Fprintf(w, "%v\n", r)
 
@@ -62,26 +63,5 @@ func Auth(app *Application) http.HandlerFunc {
 				fmt.Fprintf(w, responses.ErrorResponse("Техническая ошибка. Пожалуйста, попробуйте через пару минут"))
 			}
 		}
-	}
-}
-func Store(app *Application) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Магазин")
-	}
-}
-func FriendList(app *Application) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Список друзей")
-	}
-}
-func Chat(app *Application) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Чат")
-	}
-}
-
-func Tasks(app *Application) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Задания")
 	}
 }
