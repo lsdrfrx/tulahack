@@ -11,7 +11,7 @@ func TestCreate(t *testing.T) {
 	s.Trunc()
 
 	user := models.NewUser(
-		1, "Вася", "Пупкин",
+		"Вася", "Пупкин",
 		15, "Ауе", "123",
 		"321", "аватар", "3",
 		"школа", 123,
@@ -27,6 +27,8 @@ func TestCreate(t *testing.T) {
 		t.Fatal("Unable to find user: ", err)
 	}
 
+	user.Id = 1
+
 	if u != user {
 		t.Fatal("Users doesn't match: ", err)
 	}
@@ -37,7 +39,7 @@ func TestDelete(t *testing.T) {
 	s.Trunc()
 
 	user := models.NewUser(
-		1, "Вася", "Пупкин",
+		"Вася", "Пупкин",
 		15, "Ауе", "123",
 		"321", "аватар", "3",
 		"школа", 123,
@@ -64,14 +66,14 @@ func TestModify(t *testing.T) {
 	s.Trunc()
 
 	user := models.NewUser(
-		1, "Вася", "Пупкин",
+		"Вася", "Пупкин",
 		15, "Ауе", "123",
 		"321", "аватар", "3",
 		"школа", 123,
 	)
 
 	newu := models.NewUser(
-		1, "Вас3", "Пупкин5",
+		"Вас3", "Пупкин5",
 		125, "Ау4е", "1323",
 		"3321", "ава4тар", "13",
 		"школ5а", 1232,
@@ -86,4 +88,6 @@ func TestModify(t *testing.T) {
 	if err != nil {
 		t.Fatal("Unable to modify row: ", err)
 	}
+
+	s.Trunc()
 }

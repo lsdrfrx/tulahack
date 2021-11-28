@@ -22,7 +22,8 @@ func (r *UserRepo) Get(email string) (interface{}, error) {
 
 	row := r.db.QueryRow(query)
 	err := row.Scan(
-		&user.Id, &user.Name, &user.Surname,
+		&user.Id,
+		&user.Name, &user.Surname,
 		&user.Age, &user.Email, &user.EncPassword,
 		&user.RefreshToken, &user.Avatar, &user.Class,
 		&user.School, &user.UserId,
@@ -39,19 +40,19 @@ func (r *UserRepo) Create(user interface{}) error {
 	u := user.(models.User)
 
 	query := fmt.Sprint(
-		"INSERT INTO users (id, name, surname, " +
+		"INSERT INTO users (name, surname, " +
 			"age, email, enc_password, " +
 			"refresh_token, avatar, class, " +
 			"school, userid) VALUES (" +
 			"$1, $2, $3, " +
 			"$4, $5, $6, " +
 			"$7, $8, $9, " +
-			"$10, $11)",
+			"$10)",
 	)
 
 	_, err := r.db.Exec(
 		query,
-		u.Id, u.Name, u.Surname,
+		u.Name, u.Surname,
 		u.Age, u.Email, u.EncPassword,
 		u.RefreshToken, u.Avatar, u.Class,
 		u.School, u.UserId,

@@ -1,60 +1,62 @@
 package application
 
 import (
+	"awesomeProject/pkg/auth/proto"
 	"awesomeProject/pkg/models"
 	"awesomeProject/pkg/responses"
-	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 )
-
-//func Home(app *Application) http.HandlerFunc {
-//	return func(w http.ResponseWriter, r *http.Request) {
-//		app.Info(app.Storage.DB("user").Get())
-//	}
-//}
 
 func Auth(app *Application) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		err := r.ParseForm()
-		if err != nil {
-			fmt.Fprintf(w, err.Error())
-			return
-		}
+		fmt.Fprintf(w, "%v", r)
 
-		email := r.Form.Get("email")
-		password := r.Form.Get("password")
-
-		resp := make(map[string]interface{})
-
-		user, err := app.Storage.DB("user").Get(email)
-		if err != nil {
-			resp["error"] = "Пользователя с данным логином не существует"
-			data, _ := json.Marshal(resp)
-
-			fmt.Fprintf(w, string(data))
-			return
-		}
-
-
-		if password == user.(models.User).EncPassword {
-			data := user.(models.User)
-			resp := responses.AuthResponse{
-				Info: data,
+		r.ParseForm()
+		_new := r.Form.Get("new")
+		if _new == "true" {
+			email := r.Form.Get("email")
+			if _, err := app.Storage.DB("user").Get(email); err == nil {
+				fmt.Fprintf(w, responses.ErrorResponse("На данную почту уже имеется зарегистрированный аккаунт"))
+				return
 			}
 
-			r_, _ := json.Marshal(resp)
+			name            := r.Form.Get("name")
+			surname         := r.Form.Get("surname")
+			age             := r.Form.Get("age")
+			class           := r.Form.Get("class")
+			school          := r.Form.Get("school")
+			password        := r.Form.Get("password")
+			confirmPassword := r.Form.Get("confirmPassword")
 
-			fmt.Fprintf(w, string(r_))
-			return
+			if password == confirmPassword {
+				a, _ := strconv.Atoi(age)
+				user := models.NewUser(
+					name, surname, a,
+					email, password, "",
+					"", class, school, 0,
+				)
+				err := proto.RegistrateUser(app.Storage, user)
+				if err != nil {
+					fmt.Fprintf(w, responses.ErrorResponse("Техническая ошибка. Пожалуйста, попробуйте через пару минут"))
+					return
+				}
 
-		} else {
-			resp["error"] = "Неверный пароль"
-			data, _ := json.Marshal(resp)
-			fmt.Fprintf(w, string(data))
+				fmt.Fprintf(w, "Аккаунт создан")
+			} else {
+				fmt.Fprintf(w, responses.ErrorResponse("Пароли не совпадают"))
+			}
+		} else if _new == "false" {
+			email := r.Form.Get("email")
+			password := r.Form.Get("password")
+			valid := proto.ValidateUser(app.Storage, email, password)
+			if valid {
+				fmt.Fprintf(w, "Аккаунт валиден")
+			} else {
+				fmt.Fprintf(w, responses.ErrorResponse("Неверный логин или пароль"))
+			}
 		}
-
-		app.Info(user)
 	}
 }
 func Store(app *Application) http.HandlerFunc {

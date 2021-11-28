@@ -14,12 +14,11 @@ type User struct {
 	UserId       int    `json:"userid"`
 }
 
-func NewUser(id int, name, surname string,
+func NewUser(name, surname string,
 			 age int, email, encPassword,
 			 refreshToken, avatar, class,
 			 school string, userid int) User {
 	return User{
-		Id: id,
 		Name: name,
 		Surname: surname,
 		Age: age,
