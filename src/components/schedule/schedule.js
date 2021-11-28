@@ -7,49 +7,17 @@ import ScheduleItem from '../schedule-item';
 import './schedule.css';
 
 
-const Schedule = () => {
+const Schedule = ({ schedule }) => {
 
-  const days = useMemo(() => {
-    return [
-      { 
-        day: 'Время', 
-        classes: ['7:45', '7:45', '7:45', '7:45', '7:45', '7:45', '7:45', '7:45'] },
-      { 
-        day: 'Понедельник', 
-        classes: ['Математика', 'Физика', 'Математика', 'Физика', 'Математика', 'Физика', 'Математика', 'Физика'] 
-      },
-      { 
-        day: 'Вторник', 
-        classes: ['Математика', 'Физика', 'Математика', 'Физика', 'Математика', 'Физика', 'Математика', 'Физика'] 
-      },
-      { 
-        day: 'Среда', 
-        classes: ['Математика', 'Физика', 'Математика', 'Физика', 'Математика', 'Физика', 'Математика', 'Физика'] 
-      },
-      { 
-        day: 'Четверг', 
-        classes: ['Математика', 'Физика', 'Математика', 'Физика', 'Математика', 'Физика', 'Математика', 'Физика'] 
-      },
-      { 
-        day: 'Пятница', 
-        classes: ['Математика', 'Физика', 'Математика', 'Физика', 'Математика', 'Физика', 'Математика', 'Физика'] 
-      },
-      { 
-        day: 'Суббота', 
-        classes: ['Математика', 'Физика', 'Математика', 'Физика', 'Математика', 'Физика']
-      },
-    ]
-  })
-
-  const renderedDays = useMemo(() => {
-    return days.map(({ day, classes }, index) => <ScheduleItem day={day} classes={classes} key={index}/>)
+  const renderedSchedule = useMemo(() => {
+    return schedule.map(({ day, classes }, index) => <ScheduleItem day={day} classes={classes} key={index}/>)
   })
 
   return (
     <div className="schedule">
-      <ScheduleHeader userClass={'4-A'}/>
+      <ScheduleHeader/>
       <div className="schedule__container">
-        {renderedDays}
+        {renderedSchedule}
       </div>
     </div>
   );

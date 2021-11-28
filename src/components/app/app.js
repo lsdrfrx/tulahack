@@ -2,7 +2,8 @@ import React from "react";
 import { 
   BrowserRouter as Router,
   Route, 
-  Routes
+  Routes,
+  Navigate
 } from "react-router-dom";
 
 import { 
@@ -21,6 +22,7 @@ const App = () => {
     <div className="app">
       <Router>
         <Routes>
+          <Route path="/" element={<Navigate replace to="/authentication/sign-up"/>} exact/>
           <Route path="/authentication/sign-in" element={<SignInPage />} exact/>
           <Route path="/authentication/sign-up" element={<SignUpPage />} />
           <Route path="/main/schedule" element={<SchedulePage />}/>

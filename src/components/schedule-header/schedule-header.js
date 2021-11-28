@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import './schedule-header.css';
 
@@ -14,4 +15,8 @@ const ScheduleHeader = ({ userClass }) => {
   );
 };
 
-export default ScheduleHeader;
+const mapStateToProps = ({ user: { info }}) => {
+  return { userClass: info.class };
+}
+
+export default connect(mapStateToProps, null)(ScheduleHeader);
